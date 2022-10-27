@@ -9,6 +9,10 @@ import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
+    enum class Keys {
+        title, altText
+    }
+
     lateinit var titleTextView: TextView
     lateinit var altTextTextView: TextView
     lateinit var comicNumberEditText: EditText
@@ -36,7 +40,12 @@ class MainActivity : AppCompatActivity() {
             requestQueue.add(
                 JsonObjectRequest(Request.Method.GET, uri.toString(), null, {
                     Log.d("Response", it.toString())
-                }, {})
+
+                    titleTextView.text = it.getString("title")
+                    altTextTextView.text = it.getString("alt")
+                    Picasso
+                        .get()
+                        .load(it.getString("img"))                }, {})
             )
 		}
     }
